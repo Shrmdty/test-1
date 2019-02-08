@@ -169,6 +169,8 @@ export type Props = {
   isOptionSelected?: (OptionType, OptionsType) => boolean,
   /* Support multiple selected options */
   isMulti: boolean,
+  /* Is the select field required */
+  isRequired?: boolean,
   /* Is the select direction right-to-left */
   isRtl: boolean,
   /* Whether to enable search functionality */
@@ -377,6 +379,10 @@ export default class Select extends Component<Props, State> {
   componentDidMount() {
     this.startListeningComposition();
     this.startListeningToTouch();
+    // this.startListneingForRequiredState();
+    if (this.props.isRequired && !this.props.value) {
+      this.simulateRequiredValidation(false);
+    }
 
     if (this.props.closeMenuOnScroll && document && document.addEventListener) {
       // Listen to all scroll events, and filter them out inside of 'onScroll'
@@ -385,6 +391,15 @@ export default class Select extends Component<Props, State> {
 
     if (this.props.autoFocus) {
       this.focusInput();
+    }
+  }
+  simulateRequiredValidation (isValid: boolean) {
+    if (this.inputRef) {
+      if (isValid) {
+        this.inputRef.setCustomValidity('');
+      } else {
+        this.inputRef.setCustomValidity('Please select an option from the list');
+      }
     }
   }
   componentWillReceiveProps(nextProps: Props) {
@@ -403,6 +418,19 @@ export default class Select extends Component<Props, State> {
       const focusedOption = this.getNextFocusedOption(menuOptions.focusable);
       this.setState({ menuOptions, selectValue, focusedOption, focusedValue });
     }
+
+    if (nextProps.isRequired && (nextProps.value !== this.props.value)) {
+      if (!nextProps.value) {
+        this.simulateRequiredValidation(false);
+      } else {
+        this.simulateRequiredValidation(true);
+      }
+    }
+
+    if (this.props.isRequired && !nextProps.isRequired) {
+      this.simulateRequiredValidation(true);
+    }
+
     // some updates should toggle the state of the input visibility
     if (this.inputIsHiddenAfterUpdate != null) {
       this.setState({
@@ -1756,7 +1784,6 @@ export default class Select extends Component<Props, State> {
       return <input name={name} type="hidden" value={value} />;
     }
   }
-
   renderLiveRegion() {
     if (!this.state.isFocused) return null;
     return (
@@ -1766,7 +1793,6 @@ export default class Select extends Component<Props, State> {
       </A11yText>
     );
   }
-
   render() {
     const {
       Control,
