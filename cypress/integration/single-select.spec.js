@@ -2,14 +2,12 @@ const selector = require('../fixtures/selectors.json');
 
 const viewport = ['macbook-15', 'iphone-6'];
 
-describe('New Select', function() {
-  before(function() {
-    cy.visit('http://localhost:8000/cypress-tests');
-    cy.title().should('equal', 'React-Select');
-    cy.get('h1').should('contain', 'Test Page for Cypress');
-  });
-
-  describe('Single Select', function() {
+describe('Single Select',() => {
+    before(function() {
+      cy.visit('http://localhost:8000/cypress-tests');
+      cy.title().should('equal', 'React-Select');
+      cy.get('h1').should('contain', 'Test Page for Cypress');
+    });
     beforeEach(function() {
       cy.reload();
     });
@@ -23,7 +21,7 @@ describe('New Select', function() {
       // Also, manual testing does not confirm the desired behavior
       it.skip(
         'Should not display the options menu when touched and dragged ' + view,
-        function() {
+       () => {
           cy
             .get(selector.toggleMenuSingle)
             .click()
@@ -39,20 +37,20 @@ describe('New Select', function() {
       );
     });
 
-    describe('Basic', function() {
+    describe('Basic',() => {
       viewport.forEach(view => {
         before(function() {
           cy.viewport(view);
         });
 
-        it('Should display a default value ' + view, function() {
+        it('Should display a default value ' + view,() => {
           cy
             .get(selector.singleBasicSelect)
             .find(selector.singleValue)
             .should('contain', 'Ocean');
         });
 
-        it('Should expand the menu when expand icon is clicked ' + view, function() {
+        it('Should expand the menu when expand icon is clicked ' + view,() => {
           cy
             // Menu is not yet open
             .get(selector.singleBasicSelect)
@@ -71,7 +69,7 @@ describe('New Select', function() {
             .contains('Green');
         });
 
-        it('Should close the menu after selecting an option', function() {
+        it('Should close the menu after selecting an option',() => {
           cy
             .get(selector.singleBasicSelect)
             .find(selector.indicatorDropdown)
@@ -91,7 +89,7 @@ describe('New Select', function() {
             .should('not.exist');
         });
 
-        it('Should be disabled once disabled is checked ' + view, function() {
+        it('Should be disabled once disabled is checked ' + view,() => {
           cy
             // Does not start out disabled
             .get(selector.singleBasicSelect)
@@ -111,7 +109,7 @@ describe('New Select', function() {
             .should('be.disabled');
         });
 
-        it('Should filter options when searching ' + view, function() {
+        it('Should filter options when searching ' + view,() => {
           cy
             .get(selector.singleBasicSelect)
             .click()
@@ -124,7 +122,7 @@ describe('New Select', function() {
             .should('have.length', 1);
         });
 
-        it('Should show "No options" if searched value is not found  ' + view, function() {
+        it('Should show "No options" if searched value is not found  ' + view,() => {
           cy
             .get(selector.singleBasicSelect)
             .click()
@@ -134,7 +132,7 @@ describe('New Select', function() {
             .should('contain', 'No options');
         });
 
-        it('Should not clear the value when backspace is pressed ' + view, function() {
+        it('Should not clear the value when backspace is pressed ' + view,() => {
           cy
             .get(selector.singleBasicSelect)
             .click()
@@ -147,20 +145,20 @@ describe('New Select', function() {
       });
     });
 
-    describe('Grouped', function() {
+    describe('Grouped',() => {
       viewport.forEach(view => {
         before(function() {
           cy.viewport(view);
         });
 
-        it('Should display a default value ' + view, function() {
+        it('Should display a default value ' + view,() => {
           cy
             .get(selector.singleGroupedSelect)
             .find(selector.singleValue)
             .should('contain', 'Blue');
         });
 
-        it('Should display group headings in the menu ' + view, function() {
+        it('Should display group headings in the menu ' + view,() => {
           cy
             .get(selector.singleGroupedSelect)
             .find(selector.indicatorDropdown)
@@ -174,27 +172,27 @@ describe('New Select', function() {
       });
     });
 
-    describe('Clearable', function() {
+    describe('Clearable',() => {
       viewport.forEach(view => {
         before(function() {
           cy.viewport(view);
         });
 
-        it('Should display a default value ' + view, function() {
+        it('Should display a default value ' + view,() => {
           cy
             .get(selector.singleClearableSelect)
             .find(selector.singleValue)
             .should('contain', 'Blue');
         });
 
-        it('Should display a clear indicator ' + view, function() {
+        it('Should display a clear indicator ' + view,() => {
           cy
             .get(selector.singleClearableSelect)
             .find(selector.indicatorClear)
             .should('be.visible');
         });
 
-        it('Should clear the default value when clear is clicked ' + view, function() {
+        it('Should clear the default value when clear is clicked ' + view,() => {
           cy
             .get(selector.singleClearableSelect)
             .find(selector.indicatorClear)
@@ -206,7 +204,7 @@ describe('New Select', function() {
         });
 
         // 'backspaceRemovesValue' is true by default
-        it('Should clear the value when backspace is pressed ' + view, function() {
+        it('Should clear the value when backspace is pressed ' + view,() => {
           cy
             .get(selector.singleClearableSelect)
             .click()
@@ -219,7 +217,7 @@ describe('New Select', function() {
         });
 
         // 'backspaceRemovesValue' is true by default, and delete is included
-        it('Should clear the value when delete is pressed ' + view, function() {
+        it('Should clear the value when delete is pressed ' + view,() => {
           cy
             .get(selector.singleClearableSelect)
             .click()
@@ -231,7 +229,7 @@ describe('New Select', function() {
             .should('contain', 'Select...');
         });
 
-        it('Should not open the menu when a value is cleared with backspace ' + view, function() {
+        it('Should not open the menu when a value is cleared with backspace ' + view,() => {
           cy
             .get(selector.singleClearableSelect)
             .click()
@@ -250,7 +248,7 @@ describe('New Select', function() {
             .should('not.be.visible');
         });
 
-        it('Should clear the value when escape is pressed if escapeClearsValue and menu is closed ' + view, function() {
+        it('Should clear the value when escape is pressed if escapeClearsValue and menu is closed ' + view,() => {
           cy
             // nothing happens if escapeClearsValue is false
             .get(selector.singleClearableSelect)
@@ -291,91 +289,3 @@ describe('New Select', function() {
       });
     });
   });
-
-  describe('Multi Select ', function() {
-    viewport.forEach(view => {
-      before(function() {
-        cy.viewport(view);
-      });
-      beforeEach(function() {
-        cy.reload();
-      });
-      it(
-        'Should display several default values that can be removed ' + view,
-        function() {
-          cy
-            .get(selector.multiSelectDefaultValues)
-            .then(function($defaultValue) {
-              expect($defaultValue).to.have.length(2);
-              expect($defaultValue.eq(0)).to.contain('Purple');
-              expect($defaultValue.eq(1)).to.contain('Red');
-            });
-
-          cy
-            .get(selector.firstMultiValueRemove)
-            .click()
-            .get(selector.multiSelectDefaultValues)
-            .then(function($defaultValue) {
-              expect($defaultValue).to.have.length(1);
-              expect($defaultValue.eq(0)).to.contain('Red');
-            })
-            .get(selector.menuMulti)
-            .should('not.be.visible');
-        }
-      );
-      it(
-        'Should be able to remove values on keyboard actions ' + view,
-        function() {
-          cy
-            .get(selector.multiSelectInput)
-            .click()
-            .type('{backspace}', { force: true })
-            .get(selector.multiSelectDefaultValues)
-            .then(function($defaultValue) {
-              expect($defaultValue).to.have.length(1);
-              expect($defaultValue.eq(0)).to.contain('Purple');
-            })
-            .get(selector.multiSelectInput)
-            .type('{backspace}', { force: true })
-            .get(selector.placeHolderMulti)
-            .should('contain', 'Select...');
-        }
-      );
-      it(
-        'Should select different options using - click and enter ' + view,
-        function() {
-          cy
-            .get(selector.menuMulti)
-            .should('not.exist')
-            .get(selector.toggleMenuMulti)
-            .click()
-            .get(selector.menuMulti)
-            .should('exist')
-            .get(selector.menuMulti)
-            .should('be.visible')
-            .get(selector.menuOption)
-            .contains('Orange')
-            .click()
-            .get(selector.toggleMenuMulti)
-            .click()
-            .get(selector.menuOption)
-            .contains('Yellow')
-            .click()
-            .get(selector.multiSelectInput)
-            .click({ force: true })
-            .type('Slate', { force: true })
-            .type('{enter}', { force: true })
-            .get(selector.multiSelectDefaultValues)
-            .then(function($defaultValue) {
-              expect($defaultValue).to.have.length(5);
-              expect($defaultValue.eq(0)).to.contain('Purple');
-              expect($defaultValue.eq(1)).to.contain('Red');
-              expect($defaultValue.eq(2)).to.contain('Orange');
-              expect($defaultValue.eq(3)).to.contain('Yellow');
-              expect($defaultValue.eq(4)).to.contain('Slate');
-            });
-        }
-      );
-    });
-  });
-});
