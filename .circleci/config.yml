@@ -2,7 +2,7 @@ version: 2
 
 docker_defaults: &docker_defaults
     docker:
-        - image: cypress/base:13.6.0
+        - image: cypress/base:10
           environment:
               TERM: xterm
     working_directory: ~/project/repo
@@ -15,20 +15,24 @@ install_steps: &install_steps
     steps:
         - checkout
         - restore_cache:
-              name: Restore node_modules cache
+              name: Restore cache
               keys:
+<<<<<<< HEAD
                   - dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
                   - dependency-cache-{{ .Branch }}-
                   - dependency-cache-
+=======
+                  - cache-{{ checksum "package.json" }}
+>>>>>>> adding dependencies and caching for Cypress run
         - run:
               name: Installing Dependencies
               command: |
-                  yarn install --silent
+                  yarn install --silent --frozen-lockfile
         - save_cache:
-              name: Save node_modules cache
-              key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
+              name: Save cache
+              key: cache-{{ checksum "package.json" }}
               paths:
-                  - node_modules/
+                  - ~/.cache
         - persist_to_workspace:
               root: ~/project
               paths:
