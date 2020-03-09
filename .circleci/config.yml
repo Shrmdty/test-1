@@ -66,10 +66,10 @@ jobs:
                       yarn coveralls
     end_to_end:
         <<: *docker_defaults
-        <<: *install_steps
         steps:
             - *attach_workspace
             - run:
                   name: Running E2E tests
                   command: |
+                      yarn install --silent --frozen-lockfile
                       yarn e2e
