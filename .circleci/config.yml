@@ -15,22 +15,19 @@ install_steps: &install_steps
     steps:
         - checkout
         - restore_cache:
-              name: Restore cache
+              name: Restore node_modules cache
               keys:
-<<<<<<< HEAD
                   - dependency-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
                   - dependency-cache-{{ .Branch }}-
                   - dependency-cache-
-=======
                   - cache-{{ checksum "package.json" }}
->>>>>>> adding dependencies and caching for Cypress run
         - run:
               name: Installing Dependencies
               command: |
                   yarn install --silent --frozen-lockfile
         - save_cache:
-              name: Save cache
-              key: cache-{{ checksum "package.json" }}
+              name: Save node_modules cache
+              key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
               paths:
                   - ~/.cache
         - persist_to_workspace:
