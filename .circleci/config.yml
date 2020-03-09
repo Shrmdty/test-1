@@ -66,6 +66,7 @@ jobs:
                       yarn coveralls
     end_to_end:
         <<: *docker_defaults
+        <<: *install_steps
         steps:
             - *attach_workspace
             - run:
