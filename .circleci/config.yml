@@ -2,7 +2,7 @@ version: 2
 
 docker_defaults: &docker_defaults
     docker:
-        - image: cypress/base:10
+        - image: cypress/browsers:node10.16.3-chrome80-ff73
           environment:
               TERM: xterm
     working_directory: ~/project/repo
@@ -24,7 +24,7 @@ install_steps: &install_steps
         - run:
               name: Installing Dependencies
               command: |
-                  yarn install --silent --frozen-lockfile
+                  yarn install --silent
         - save_cache:
               name: Save node_modules cache
               key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
@@ -68,5 +68,5 @@ jobs:
             - run:
                   name: Running E2E tests
                   command: |
-                      yarn install --silent --frozen-lockfile
+                      yarn install --silent
                       yarn e2e
