@@ -2,7 +2,7 @@ version: 2
 
 docker_defaults: &docker_defaults
     docker:
-        - image: cypress/browsers:node10.16.3-chrome80-ff73
+        - image: cypress/browsers:node12.13.0-chrome78-ff70
           environment:
               TERM: xterm
     working_directory: ~/project/repo
@@ -69,4 +69,5 @@ jobs:
                   name: Running E2E tests
                   command: |
                       yarn install --silent
+                      cypress install
                       yarn e2e
