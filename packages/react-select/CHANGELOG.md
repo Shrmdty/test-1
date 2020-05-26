@@ -1,5 +1,13 @@
 # react-select
 
+## 3.1.1
+
+### Patch Changes
+
+- [c8d74bd5](https://github.com/JedWatson/react-select/commit/c8d74bd5710b1db6736837fb4334a59e46614a27) [#3979](https://github.com/JedWatson/react-select/pull/3979) Thanks [@mitchellhamilton](https://github.com/mitchellhamilton)! - Fix repository field
+- [c8447f48](https://github.com/JedWatson/react-select/commit/c8447f480f8b9ca04386bee08e8d3a6fbb4f07c8) [#4034](https://github.com/JedWatson/react-select/pull/4034) Thanks [@sophiebits](https://github.com/sophiebits)! - Improve performance of option filtering when ignoreAccents is enabled (the default)
+- [32ad5c04](https://github.com/JedWatson/react-select/commit/32ad5c040bdd96cd1ca71010c2558842d684629c) [#3892](https://github.com/JedWatson/react-select/pull/3892) Thanks [@flexdinesh](https://github.com/flexdinesh)! - Fix react-select ignoring HTML5 "form" attribute
+
 ## 3.1.0
 
 ### Minor Changes
